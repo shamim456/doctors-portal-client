@@ -1,8 +1,8 @@
 import React from "react";
 import AboutCard from "./AboutCard";
-import Clock from "../../assets/icons/clock.svg";
-import Marker from "../../assets/icons/marker.svg";
-import Phone from "../../assets/icons/phone.svg";
+import Clock from "../../../assets/icons/clock.svg";
+import Marker from "../../../assets/icons/marker.svg";
+import Phone from "../../../assets/icons/phone.svg";
 
 const aboutCardInfo = [
   { 

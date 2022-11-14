@@ -1,6 +1,6 @@
 import React from "react";
-import Doctor from "../../assets/images/doctor.png";
-import background from '../../assets/images/appointment.png'
+import Doctor from "../../../assets/images/doctor.png";
+import background from '../../../assets/images/appointment.png'
 
 const AppoinmentHomePage = () => {
   return (

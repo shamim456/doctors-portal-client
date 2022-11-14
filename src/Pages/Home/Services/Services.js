@@ -1,9 +1,9 @@
 import React from "react";
-import CavityTeeth from "../../assets/images/cavity.png";
-import WhiteTeeth from "../../assets/images/whitening.png";
-import FluorideTeeth from "../../assets/images/fluoride.png";
+import CavityTeeth from "../../../assets/images/cavity.png";
+import WhiteTeeth from "../../../assets/images/whitening.png";
+import FluorideTeeth from "../../../assets/images/fluoride.png";
 import Service from "./Service";
-import TreatmentImg from "../../assets/images/treatment.png";
+import TreatmentImg from "../../../assets/images/treatment.png";
 
 const ServiceCardInfo = [
   {

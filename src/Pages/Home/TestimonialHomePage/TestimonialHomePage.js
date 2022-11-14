@@ -1,8 +1,8 @@
 import React from "react";
-import quote from "../../assets/icons/quote.svg";
-import Student1 from "../../assets/images/people1.png";
-import Student2 from "../../assets/images/people2.png";
-import Student3 from "../../assets/images/people3.png";
+import quote from "../../../assets/icons/quote.svg";
+import Student1 from "../../../assets/images/people1.png";
+import Student2 from "../../../assets/images/people2.png";
+import Student3 from "../../../assets/images/people3.png";
 import TestimonialCard from "./TestimonialCard";
 const PatientsTestimonial = [
   {

@@ -1,10 +1,11 @@
 import React from 'react';
-import About from '../About/About';
-import AppoinmentHomePage from '../AppoinmentHomePage/AppoinmentHomePage';
-import Contact from '../Contact/Contact';
-import Services from '../Services/Services';
-import TestimonialHomePage from '../TestimonialHomePage/TestimonialHomePage';
-import Banner from './Banner';
+import About from './About/About';
+import AppoinmentHomePage from './AppoinmentHomePage/AppoinmentHomePage';
+import Banner from './Banner/Banner';
+
+import Contact from './Contact/Contact';
+import Services from './Services/Services';
+import TestimonialHomePage from './TestimonialHomePage/TestimonialHomePage';
 
 const Home = () => {
     return (
