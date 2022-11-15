@@ -2,6 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import background from "../../../assets/images/footer.png";
 
+
+
+const date = new Date();
+const year = date.getFullYear();
+
 const Footer = () => {
   return (
     <footer
@@ -32,7 +37,7 @@ const Footer = () => {
       </div>
 
       <div className="footer footer-center p-4 text-base-content mt-10">
-        <p>Copyright © 2022 - All right reserved by ACME Industries Ltd</p>
+        <p>Copyright © {year} - All right reserved </p>
       </div>
     </footer>
   );
