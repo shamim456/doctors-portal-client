@@ -15,10 +15,11 @@ function App() {
         <Route path='/' element={<Home></Home>} ></Route>
         <Route path='/home' element={<Home></Home>} ></Route>
         <Route path='/about' element={<About></About>} ></Route>
-        
+        <Route path='/appoinment' element={<Appoinment></Appoinment>} ></Route>    
         <Route path='/login' element={<Login></Login>} ></Route>
       </Routes>
       <Footer></Footer>
+      <h1>shamim</h1>
     </div>
   );
 }
