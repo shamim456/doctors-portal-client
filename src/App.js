@@ -19,7 +19,6 @@ function App() {
         <Route path='/login' element={<Login></Login>} ></Route>
       </Routes>
       <Footer></Footer>
-      <h1>shamim</h1>
     </div>
   );
 }
