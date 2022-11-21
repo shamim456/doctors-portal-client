@@ -1,14 +1,17 @@
 import React from "react";
 import { format } from "date-fns";
+import auth from "../../firebase.init";
+import { useAuthState } from "react-firebase-hooks/auth";
 const BookingModal = ({ treatment, date }) => {
   const { name, slots } = treatment;
-console.log(treatment)
-
+  // console.log(slots);
+  const [user, loading, error] = useAuthState(auth);
+  console.log(user);
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.timeSlot.value;
-    console.log(slot)
-  }
+    console.log(slot);
+  };
 
   return (
     <div>
@@ -22,7 +25,10 @@ console.log(treatment)
             ✕
           </label>
           <h3 className="font-bold text-lg">Booking For : {name}</h3>
-          <form onSubmit={handleBooking} className="grid grid-cols-1 gap-5 justify-items-center">
+          <form
+            onSubmit={handleBooking}
+            className="grid grid-cols-1 gap-5 justify-items-center"
+          >
             <input
               name="date"
               type="text"
@@ -34,20 +40,26 @@ console.log(treatment)
               name="timeSlot"
               className="select select-bordered w-full max-w-xs"
             >
-              {slots.map((slot) => (
-                <option  value={slot}>{slot}</option>
-              ))}
+              {!slots
+                ? "No Slot Available At This Time"
+                : slots.map((slot) => (
+                    <option key={Math.random()} value={slot}>
+                      {slot}
+                    </option>
+                  ))}
             </select>
             <input
+              disabled
               name="name"
               type="text"
-              placeholder="Your Name"
+              value={user?.displayName || ''}
               className="input input-bordered w-full max-w-xs"
             />
             <input
+            disabled
               name="email"
               type="text"
-              placeholder="Email"
+              value={user?.email || ''}
               className="input input-bordered w-full max-w-xs"
             />
             <input

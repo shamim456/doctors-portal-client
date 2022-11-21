@@ -1,7 +1,22 @@
+import { signOut } from "firebase/auth";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
+import auth from "../../firebase.init";
+import Loading from "./Loading";
 
 const Navbar = () => {
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  console.log(user);
+  const logOut = () => {
+    signOut(auth);
+    navigate('/')
+  }
+
+  if (loading) {
+    return <Loading></Loading>;
+  }
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -43,7 +58,13 @@ const Navbar = () => {
               <Link to="/">Contact Us</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              {user ? (
+                <button
+                  onClick={logOut}
+                ></button>
+              ) : (
+                <Link to="/login">Login</Link>
+              )}
             </li>
           </ul>
         </div>
@@ -70,7 +91,7 @@ const Navbar = () => {
             <Link to="/">Contact Us</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            {user ? <button onClick={logOut} >Log Out</button> : <Link to="/login">Login</Link>}
           </li>
         </ul>
       </div>

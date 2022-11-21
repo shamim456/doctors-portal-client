@@ -5,13 +5,13 @@ import AvailableAppoinmentCard from "./AvailableAppoinmentCard";
 
 const AvailableAppoinments = ({ date }) => {
   const [services, setServices] = useState([]);
-  const [treatment, setTreatment] = useState(null);
+  const [treatment, setTreatment] = useState({});
   useEffect(() => {
-    fetch("services.json")
+    fetch("http://localhost:5000/service")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
-  console.log(treatment)
+  // console.log(treatment)
   return (
     <div>
       <p>Available Services on {format(date, "PP")}.</p>
@@ -25,7 +25,13 @@ const AvailableAppoinments = ({ date }) => {
           ></AvailableAppoinmentCard>
         ))}
       </div>
-      {setTreatment && <BookingModal treatment={treatment} date={date} ></BookingModal>}
+      {setTreatment && (
+        <BookingModal
+          setTreatment={setTreatment}
+          treatment={treatment}
+          date={date}
+        ></BookingModal>
+      )}
     </div>
   );
 };

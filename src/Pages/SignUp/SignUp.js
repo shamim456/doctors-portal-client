@@ -2,31 +2,35 @@ import React, { useState } from "react";
 import auth from "../../firebase.init";
 
 import {
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-
   // email & password user
-  if (user || gUser) {
-    navigate(from, { replace: true });
+  if (user) {
+    console.log(user);
+  }
+  // google ar signin method ta thik korar por eta thik korte hobe
+  if (gUser) {
+    console.log(user);
   }
 
   if (loading || gLoading) {
@@ -41,10 +45,13 @@ const Login = () => {
     signInError = <p>{error?.message || gError?.message}</p>;
   }
 
-  const onSubmit = (data) => {
-    signInWithEmailAndPassword(data.email, data.password);
+  const onSubmit = async( data) => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.text });
+    navigate('/appoinment')
     // console.log(data);
   };
+
   return (
     <div
       className="flex items-center justify-center"
@@ -52,11 +59,38 @@ const Login = () => {
     >
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="text-center">Login</h2>
+          <h2 className="text-center">SIGNUP</h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* email input */}
+            {/* name input */}
             <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">NAME</span>
+              </label>
+              <input
+                {...register("text", {
+                  required: {
+                    value: true,
+                    message: "Name Is Required",
+                  }
+                  
+                })}
+                aria-invalid={errors.name ? "true" : "false"}
+                type="name"
+                placeholder="Your Name"
+                className="input input-bordered w-full max-w-xs"
+              />
+              <label className="label">
+                {errors.email?.type === "required" && (
+                  <span role="alert" className="label-text-alt">
+                    {errors.text.message}
+                  </span>
+                )}
+              </label>
+
+
+
+
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
@@ -130,13 +164,13 @@ const Login = () => {
             </div>
             {signInError}
             <button type="submit" className="btn btn-primary w-full">
-              LOGIN
+              SIGN UP
             </button>
           </form>
           <p>
-            New to Doctors Portal?{" "}
-            <Link to="/signup" className="text-primary">
-              Create new account
+            Already have an account?{" "}
+            <Link to="/login" className="text-primary">
+              Login
             </Link>
           </p>
           <div className="divider">OR</div>
@@ -153,4 +187,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
