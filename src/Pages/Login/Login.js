@@ -68,7 +68,7 @@ const Login = () => {
                   },
                   pattern: {
                     value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                    message: "Provide A Valid Email",
+                    message: "Please Provide A Valid Email",
                   },
                 })}
                 aria-invalid={errors.email ? "true" : "false"}
