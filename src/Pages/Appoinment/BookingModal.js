@@ -2,15 +2,27 @@ import React from "react";
 import { format } from "date-fns";
 import auth from "../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
+// import id from "date-fns/esm/locale/id/index.js";
 const BookingModal = ({ treatment, date }) => {
   const { name, slots } = treatment;
   // console.log(slots);
-  const [user, loading, error] = useAuthState(auth);
+  const [id,user, loading, error] = useAuthState(auth);
   console.log(user);
+  const formatedData = format(date, 'PP');
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.timeSlot.value;
     console.log(slot);
+    const bookingData = {
+      treatmentId : id,
+      treatment: name,
+      date: formatedData,
+      slot,
+      patientName: user.displayName,
+      patientEmail: user.email,
+      phoneNumber: e.target.phoneNumber.value
+
+    }
   };
 
   return (
