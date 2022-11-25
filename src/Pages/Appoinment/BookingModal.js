@@ -1,28 +1,47 @@
 import React from "react";
-import { format } from "date-fns";
+import { format, formatedDate } from "date-fns";
 import auth from "../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
+
+import { toast } from "react-toastify";
 // import id from "date-fns/esm/locale/id/index.js";
-const BookingModal = ({ treatment, date }) => {
-  const { name, slots } = treatment;
+const BookingModal = ({ setTreatment, treatment, date }) => {
+  const { _id, name, slots } = treatment;
   // console.log(slots);
-  const [id,user, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   console.log(user);
-  const formatedData = format(date, 'PP');
+  const formatedData = format(date, "PP");
   const handleBooking = (e) => {
     e.preventDefault();
     const slot = e.target.timeSlot.value;
     console.log(slot);
     const bookingData = {
-      treatmentId : id,
+      id: _id,
       treatment: name,
       date: formatedData,
       slot,
       patientName: user.displayName,
       patientEmail: user.email,
-      phoneNumber: e.target.phoneNumber.value
+      phoneNumber: e.target.phoneNumber.value,
+    };
 
-    }
+    fetch("http://localhost:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.sucess) {
+          toast("Your Appoinment Set Successfully");
+        } else {
+          toast("You Already Have An Appoinment");
+        }
+        // setTreatment({});
+      });
   };
 
   return (
@@ -64,14 +83,14 @@ const BookingModal = ({ treatment, date }) => {
               disabled
               name="name"
               type="text"
-              value={user?.displayName || ''}
+              value={user?.displayName || ""}
               className="input input-bordered w-full max-w-xs"
             />
             <input
-            disabled
+              disabled
               name="email"
               type="text"
-              value={user?.email || ''}
+              value={user?.email || ""}
               className="input input-bordered w-full max-w-xs"
             />
             <input
@@ -80,7 +99,16 @@ const BookingModal = ({ treatment, date }) => {
               placeholder="Phone Number"
               className="input input-bordered w-full max-w-xs"
             />
-            <input type="submit" value="SUBMIT" className="btn btn-primary " />
+
+            <button type="submit">
+              <label
+                htmlFor="booking-modal"
+                className="btn btn-primary" 
+              >
+                SUBMIT
+              </label>
+            </button>
+            
           </form>
         </div>
       </div>
