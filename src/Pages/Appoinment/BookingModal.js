@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { toast } from "react-toastify";
 // import id from "date-fns/esm/locale/id/index.js";
-const BookingModal = ({ setTreatment, treatment, date }) => {
+const BookingModal = ({ setTreatment, treatment, date, refetch }) => {
   const { _id, name, slots } = treatment;
   // console.log(slots);
   const [user, loading, error] = useAuthState(auth);
@@ -34,13 +34,14 @@ const BookingModal = ({ setTreatment, treatment, date }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (data.sucess) {
+        console.log(data.success);
+        if (data.success) {
           toast("Your Appoinment Set Successfully");
         } else {
-          toast("You Already Have An Appoinment");
+          toast.error("You Already Have An Appoinment");
         }
         // setTreatment({});
+        refetch();
       });
   };
 
