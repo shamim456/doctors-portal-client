@@ -9,13 +9,17 @@ import {
 import { useForm } from "react-hook-form";
 import Loading from "../Shared/Loading";
 import { Link, useNavigate } from "react-router-dom";
+import useToken from "../../Hooks/useToken";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
+  
   const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+  useCreateUserWithEmailAndPassword(auth);
+
+  const [token] = useToken(user || gUser)
 
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
@@ -25,12 +29,17 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
   // email & password user
-  if (user) {
-    console.log(user);
-  }
+  // if (user) {
+  //   console.log(user);
+  // }
   // google ar signin method ta thik korar por eta thik korte hobe
-  if (gUser) {
-    console.log(user);
+  // if (gUser) {
+  //   console.log(user);
+  //  navigate('/appoinment')
+  // }
+
+  if(token) {
+    navigate('/appoinment')
   }
 
   if (loading || gLoading) {
@@ -48,7 +57,7 @@ const SignUp = () => {
   const onSubmit = async( data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.text });
-    navigate('/appoinment')
+
     // console.log(data);
   };
 
