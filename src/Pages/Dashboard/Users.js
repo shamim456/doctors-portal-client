@@ -1,10 +1,16 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import Loading from '../Shared/Loading';
+import UsersInfo from './UsersInfo';
 
 const Users = () => {
     const { isLoading, error, data: users, refetch} = useQuery(["users"], () =>
-    fetch(`http://localhost:5000/user`).then(res =>
+    fetch(`http://localhost:5000/user`, {
+        method: 'GET', 
+        headers: {
+            authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+    }).then(res =>
       res.json()
     ))
   
@@ -28,12 +34,9 @@ const Users = () => {
     </thead>
     <tbody>
       {/* <!-- row 1 --> */}
-      <tr>
-        <th>1</th>
-        <td>Cy Ganderton</td>
-        <td>Quality Control Specialist</td>
-        <td>Blue</td>
-      </tr>
+      {
+        users.map(user => <UsersInfo key={user._id} user={user}></UsersInfo>)
+      }
     </tbody>
   </table>
 </div>
